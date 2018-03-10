@@ -1,0 +1,16 @@
+version: '2'
+services:
+  salt:
+    privileged: true
+    hostname: salt
+    build: images/salt
+    volumes:
+      - ./srv:/srv
+  stretch:
+    privileged: true
+    hostname: stretch
+    build: images/stretch
+  centos7:
+    privileged: true
+    hostname: centos7
+    build: images/centos7
