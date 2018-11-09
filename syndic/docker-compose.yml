@@ -1,0 +1,39 @@
+version: '2'
+services:
+  salt:
+    privileged: true
+    hostname: salt
+    build: ../images/salt
+    volumes:
+      - ../srv:/srv
+      - ./master.conf:/etc/salt/master.d/master.conf
+    networks:
+      - master
+  minion1:
+    privileged: true
+    hostname: minion1
+    build: ../images/stretch
+    networks:
+      - master
+  syndic:
+    privileged: true
+    hostname: syndic
+    build: ../images/syndic
+    networks:
+      - master
+      - syndic
+    volumes:
+      - ../srv:/srv
+      - ./syndic.conf:/etc/salt/master.d/syndic.conf
+  minion2:
+    privileged: true
+    hostname: minion2
+    build: ../images/stretch
+    networks:
+      - syndic
+    volumes:
+      - ./minion2.conf:/etc/salt/minion.d/minion2.conf
+
+networks:
+  master: {}
+  syndic: {}
